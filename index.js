@@ -36,6 +36,7 @@ let persons = [
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static("dist"));
 app.use(requestLogger);
 app.use(morgan(":method :url :status - :response-time ms :body"));
 
