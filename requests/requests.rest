@@ -1,4 +1,4 @@
-GET http://localhost:3001/api/persons
+GET https://test-render-k45v.onrender.com/
 
 ### POST
 
@@ -12,6 +12,6 @@ Content-Type: application/json
 
 ### DELETE
 
-DELETE http://localhost:3001/api/persons/1
+DELETE https://test-render-k45v.onrender.com/1
 
 ###
