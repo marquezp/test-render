@@ -52,18 +52,15 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/persons", (req, res) => {
-  res.send(persons);
+  Person.find({}).then((people) => {
+    res.json(people);
+  });
 });
 
 app.get("/api/persons/:id", (req, res) => {
-  const id = req.params.id;
-  const person = persons.find((person) => person.id === id);
-
-  if (person) {
-    res.json(person);
-  } else {
-    res.status(404).end();
-  }
+  Person.findById(req.params.id).then((person) => {
+    response.json(person);
+  });
 });
 
 app.get("/info", (req, res) => {
@@ -101,7 +98,9 @@ app.post("/api/persons", (req, res) => {
       error: "name must be unique",
     });
   }
+
   const person = new Person({
+    id: Math.floor(Math.random() * 1000000),
     name: body.name,
     phone: body.number,
   });
@@ -112,12 +111,12 @@ app.post("/api/persons", (req, res) => {
   });
 });
 
-app.delete("/api/persons/:id", (req, res) => {
-  const id = req.params.id;
-  persons = persons.filter((person) => person.id !== id);
-
-  res.status(204).end();
-});
+// app.delete("/api/persons/:id", (req, res) => {
+//   Person.findById(req.params.id).then(person => {
+//     express.response,
+//   })
+//   res.status(204).end();
+// });
 
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: "unknown endpoint" });
