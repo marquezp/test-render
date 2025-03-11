@@ -1,4 +1,6 @@
+require("dotenv").config();
 const express = require("express");
+const Person = require("./models/person");
 const morgan = require("morgan");
 const cors = require("cors");
 const app = express();
@@ -99,16 +101,15 @@ app.post("/api/persons", (req, res) => {
       error: "name must be unique",
     });
   }
-
-  const newPerson = {
-    id: Math.floor(Math.random() * 1000000).toString(),
+  const person = new Person({
     name: body.name,
-    number: body.number,
-  };
+    phone: body.number,
+  });
 
-  persons = persons.concat(newPerson);
-  res.send(newPerson);
-  res.status(201).end();
+  person.save().then((savedPerson) => {
+    res.json(savedPerson);
+    res.status(201).end();
+  });
 });
 
 app.delete("/api/persons/:id", (req, res) => {
